@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DDoS Detection Dashboard</title>
+</head>
+<body>
+    <h1>Real-Time DDoS Detection</h1>
+    <div id="result"></div>
+    <img id="shap-plot" src="" alt="SHAP Explanation">
+    
+    <script>
+        fetch('/predict', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({features: [0.5, 1000, 800, 0.8, 0.2, 0.1]})
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('result').innerHTML = 
+                `Status: ${data.status}<br>Confidence: ${data.confidence.toFixed(2)}`;
+            document.getElementById('shap-plot').src = data.shap_plot;
+        });
+    </script>
+</body>
+</html>
